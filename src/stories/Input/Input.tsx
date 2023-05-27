@@ -19,6 +19,14 @@ export const Input = ({
       return "";
     }
   }
+  const debouncedSearch = debounce((text) => {
+    setQuery(text);
+  }, 1500);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    debouncedSearch(e.target.value);
+  }
+
   function renderLabelIfNeeded() {
     if (withLabel) {
       return (
@@ -44,9 +52,7 @@ export const Input = ({
         className={`input ${noBorder ? "no-border" : ""}`}
         id={computedId()}
         placeholder="Search..."
-        onChange={(event) =>
-          debounce(() => setQuery(event.target.value), 750)()
-        }
+        onChange={handleChange}
       ></input>{" "}
     </div>
   );
